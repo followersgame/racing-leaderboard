@@ -1039,8 +1039,8 @@
                 }
             ];
 
-            appState.days = {
-                day1: {
+          appState.days = {
+    ['day' + Date.now()]: {
                     name: "Day 1",
                     data: [...sampleData],
                     winnerPhoto: null
@@ -1131,16 +1131,26 @@
             });
         }
 
-        // Change current day
-        function changeDay(dayKey) {
-            appState.currentDay = dayKey;
-            appState.currentData = [...appState.days[dayKey].data];
-            
-            renderLeaderboard(appState.currentData);
-            renderDayButtons();
-            updateCurrentDayInfo();
-            updateWinnerSpotlight();
-        }
+   // Change current day - IMPROVED VERSION
+function changeDay(dayKey) {
+    if (!appState.days[dayKey]) {
+        console.error('Day not found:', dayKey);
+        showNotification('Error: Day data not found', 'error');
+        return;
+    }
+    
+    appState.currentDay = dayKey;
+    appState.currentData = [...appState.days[dayKey].data];
+    
+    renderLeaderboard(appState.currentData);
+    renderDayButtons();
+    updateCurrentDayInfo();
+    updateWinnerSpotlight();
+    
+    // Debug
+    console.log('Changed to day:', dayKey);
+    console.log('Available days:', Object.keys(appState.days));
+}
 
         // Update current day info display
         function updateCurrentDayInfo() {
@@ -1241,52 +1251,56 @@
             renderLeaderboard(filteredData);
         }
 
-        // Handle CSV file upload
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+// Handle CSV file upload - FIXED VERSION
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    fileName.textContent = file.name;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const csvText = e.target.result;
+            const parsedData = parseCSV(csvText);
             
-            fileName.textContent = file.name;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const csvText = e.target.result;
-                    const parsedData = parseCSV(csvText);
-                    
-                    if (parsedData && parsedData.length > 0) {
-                        // Always create a new day when uploading CSV
-                        const dayName = dayNameInput.value.trim() || `Day ${Object.keys(appState.days).length + 1}`;
-                        const dayKey = 'day' + (Object.keys(appState.days).length + 1);
-                        
-                        appState.days[dayKey] = {
-                            name: dayName,
-                            data: parsedData,
-                            winnerPhoto: null
-                        };
-                        
-                        // Switch to the new day
-                        changeDay(dayKey);
-                        
-                        // Reset form
-                        dayNameInput.value = '';
-                        fileName.textContent = 'No file selected';
-                        csvFile.value = '';
-                        
-                        // Save to localStorage
-                        saveToLocalStorage();
-                        
-                        showNotification(`New day "${dayName}" created successfully!`, 'success');
-                    } else {
-                        showNotification('No valid data found in CSV file.', 'error');
-                    }
-                } catch (error) {
-                    console.error('Error parsing CSV:', error);
-                    showNotification('Error parsing CSV file. Please check the format.', 'error');
-                }
-            };
-            reader.readAsText(file);
+            if (parsedData && parsedData.length > 0) {
+                // Always create a new day when uploading CSV
+                const dayName = dayNameInput.value.trim() || `Day ${Object.keys(appState.days).length + 1}`;
+                const dayKey = 'day' + Date.now(); // Use timestamp for unique key
+                
+                appState.days[dayKey] = {
+                    name: dayName,
+                    data: parsedData,
+                    winnerPhoto: null
+                };
+                
+                // Switch to the new day
+                changeDay(dayKey);
+                
+                // Reset form
+                dayNameInput.value = '';
+                fileName.textContent = 'No file selected';
+                csvFile.value = '';
+                
+                // Save to localStorage
+                saveToLocalStorage();
+                
+                showNotification(`New day "${dayName}" created successfully!`, 'success');
+                
+                // Debug: Check all days
+                console.log('All days:', appState.days);
+                console.log('Current day:', appState.currentDay);
+            } else {
+                showNotification('No valid data found in CSV file.', 'error');
+            }
+        } catch (error) {
+            console.error('Error parsing CSV:', error);
+            showNotification('Error parsing CSV file. Please check the format.', 'error');
         }
+    };
+    reader.readAsText(file);
+}
 
         // Handle winner photo upload
         function handleWinnerPhotoUpload(event) {
@@ -1588,4 +1602,5 @@
     </script>
 </body>
 </html>
+
 
