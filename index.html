@@ -810,20 +810,17 @@
                     </div>
                 </div>
                 
-                <div class="admin-section">
-                    <div class="section-title">
-                        <i class="fas fa-calendar-plus"></i> Day Management
-                    </div>
-                    <input type="text" class="day-input" id="dayName" placeholder="Enter day name (e.g., Day 5, Finals, etc.)">
-                    <div class="admin-actions" style="margin-top: 15px;">
-                        <button class="action-btn save-btn" id="saveDay">
-                            <i class="fas fa-save"></i> Save Day with CSV
-                        </button>
-                        <button class="action-btn reset-btn" id="resetForm">
-                            <i class="fas fa-redo"></i> Reset
-                        </button>
-                    </div>
-                </div>
+              <div class="admin-section">
+    <div class="section-title">
+        <i class="fas fa-cloud-upload-alt"></i> Update Public Data
+    </div>
+    <button class="upload-btn" onclick="exportDataForGitHub()">
+        <i class="fas fa-download"></i> Export Data for GitHub
+    </button>
+    <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem; margin-top: 10px;">
+        After exporting, upload the data.json file to your GitHub repository to update everyone.
+    </p>
+</div>
             </div>
         </section>
 
@@ -946,35 +943,91 @@
         let currentDayInfo, winnerDayTitle, winnerAvatar, winnerName, winnerDescription;
         let winnerTime, winnerLane, winnerMedal, winnerPhotoBtn, winnerPhotoFile, winnerPhotoName;
 
-        // Initialize the application
-        function initApp() {
-            console.log('Initializing app...');
-            
-            // Load DOM elements
-            loadDOMElements();
-            
-            // Load data from localStorage if available
-            loadFromLocalStorage();
-            
-            // If no days exist, create a default one
-            if (Object.keys(appState.days).length === 0) {
-                createDefaultDay();
-            }
-            
-            // Set current day to the first available day
-            if (!appState.currentDay && Object.keys(appState.days).length > 0) {
-                appState.currentDay = Object.keys(appState.days)[0];
-                appState.currentData = [...appState.days[appState.currentDay].data];
-            }
-            
-            renderLeaderboard(appState.currentData);
-            renderDayButtons();
-            setupEventListeners();
-            updateCurrentDayInfo();
-            updateWinnerSpotlight();
-            
-            console.log('App initialized successfully!');
+     // Configuration - UPDATE WITH YOUR ACTUAL REPO INFO
+const DATA_URL = 'https://raw.githubusercontent.com/followersgame/racing-leaderboard/main/data.json';
+
+// Load data from GitHub JSON file
+async function loadDataFromGitHub() {
+    try {
+        console.log('Loading data from GitHub...');
+        
+        // Add timestamp to avoid caching
+        const response = await fetch(DATA_URL + '?t=' + Date.now());
+        
+        if (!response.ok) {
+            throw new Error('Failed to load data');
         }
+        
+        const remoteData = await response.json();
+        
+        // Replace local data with GitHub data
+        appState.days = remoteData.days;
+        appState.currentDay = remoteData.currentDay;
+        
+        if (appState.currentDay && appState.days[appState.currentDay]) {
+            appState.currentData = [...appState.days[appState.currentDay].data];
+        }
+        
+        renderLeaderboard(appState.currentData);
+        renderDayButtons();
+        updateCurrentDayInfo();
+        updateWinnerSpotlight();
+        
+        console.log('Data loaded from GitHub:', appState.days);
+        showNotification('Live race data loaded!', 'success');
+        
+    } catch (error) {
+        console.error('Error loading from GitHub:', error);
+        // Fallback to localStorage
+        loadFromLocalStorage();
+        if (Object.keys(appState.days).length === 0) {
+            createDefaultDay();
+        }
+    }
+}
+
+// Auto-refresh data every 30 seconds
+function startAutoRefresh() {
+    setInterval(() => {
+        if (!appState.isAdmin) { // Don't refresh while admin is working
+            loadDataFromGitHub();
+        }
+    }, 30000);
+}
+
+// Export data as JSON file for uploading to GitHub
+function exportDataForGitHub() {
+    const dataToExport = {
+        days: appState.days,
+        currentDay: appState.currentDay
+    };
+    
+    const dataStr = JSON.stringify(dataToExport, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(dataBlob);
+    link.download = 'data.json';
+    link.click();
+    
+    showNotification('Data exported! Upload this file to GitHub to update everyone.', 'success');
+}
+
+// Initialize the application - UPDATED VERSION
+function initApp() {
+    console.log('Initializing app...');
+    
+    loadDOMElements();
+    setupEventListeners();
+    
+    // Load from GitHub first (this will show data to everyone)
+    loadDataFromGitHub().then(() => {
+        // Start auto-refresh after initial load
+        startAutoRefresh();
+    });
+    
+    console.log('App initialized successfully!');
+}
 
         // Load all DOM elements
         function loadDOMElements() {
@@ -1602,5 +1655,6 @@ function handleFileUpload(event) {
     </script>
 </body>
 </html>
+
 
 
