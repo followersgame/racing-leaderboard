@@ -1,0 +1,29 @@
+{
+  "days": {
+    "day1": {
+      "name": "Sample Race Day",
+      "data": [
+        {
+          "rank": 1,
+          "username": "Racing_Pro",
+          "full_name": "Alex Johnson",
+          "finish_time_seconds": 12.45,
+          "finish_time_frames": 747,
+          "lane_position": 4,
+          "medal": "Gold"
+        },
+        {
+          "rank": 2,
+          "username": "Speed_Demon", 
+          "full_name": "Maria Garcia",
+          "finish_time_seconds": 12.67,
+          "finish_time_frames": 760,
+          "lane_position": 2,
+          "medal": "Silver"
+        }
+      ],
+      "winnerPhoto": null
+    }
+  },
+  "currentDay": "day1"
+}
