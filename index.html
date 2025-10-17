@@ -1014,15 +1014,77 @@ function exportDataForGitHub() {
 }
 
 // Initialize the application - UPDATED VERSION
+// Configuration
+const DATA_URL = 'https://raw.githubusercontent.com/followersgame/racing-leaderboard/main/data.json';
+
+// Load data from GitHub JSON file
+async function loadDataFromGitHub() {
+    try {
+        console.log('Loading data from GitHub...');
+        const response = await fetch(DATA_URL + '?t=' + Date.now());
+        
+        if (!response.ok) throw new Error('Failed to load data');
+        
+        const remoteData = await response.json();
+        appState.days = remoteData.days;
+        appState.currentDay = remoteData.currentDay;
+        
+        if (appState.currentDay && appState.days[appState.currentDay]) {
+            appState.currentData = [...appState.days[appState.currentDay].data];
+        }
+        
+        renderLeaderboard(appState.currentData);
+        renderDayButtons();
+        updateCurrentDayInfo();
+        updateWinnerSpotlight();
+        
+        showNotification('Live race data loaded!', 'success');
+        
+    } catch (error) {
+        console.error('Error loading from GitHub:', error);
+        loadFromLocalStorage();
+        if (Object.keys(appState.days).length === 0) {
+            createDefaultDay();
+        }
+    }
+}
+
+// Auto-refresh data every 30 seconds
+function startAutoRefresh() {
+    setInterval(() => {
+        if (!appState.isAdmin) {
+            loadDataFromGitHub();
+        }
+    }, 30000);
+}
+
+// Export data as JSON file for uploading to GitHub
+function exportDataForGitHub() {
+    const dataToExport = {
+        days: appState.days,
+        currentDay: appState.currentDay
+    };
+    
+    const dataStr = JSON.stringify(dataToExport, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(dataBlob);
+    link.download = 'data.json';
+    link.click();
+    
+    showNotification('Data exported! Upload this file to GitHub to update everyone.', 'success');
+}
+
+// Initialize the application - UPDATED VERSION
 function initApp() {
     console.log('Initializing app...');
     
     loadDOMElements();
     setupEventListeners();
     
-    // Load from GitHub first (this will show data to everyone)
+    // Load from GitHub first
     loadDataFromGitHub().then(() => {
-        // Start auto-refresh after initial load
         startAutoRefresh();
     });
     
@@ -1655,6 +1717,7 @@ function handleFileUpload(event) {
     </script>
 </body>
 </html>
+
 
 
 
