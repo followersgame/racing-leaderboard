@@ -714,6 +714,9 @@
             adminPassword: 'admin123'
         };
 
+        // ==================== GITHUB CONFIGURATION ====================
+        const GITHUB_DATA_URL = 'https://raw.githubusercontent.com/followersgame/racing-leaderboard/main/data.json';
+
         // ==================== DOM ELEMENTS ====================
         const elements = {};
 
@@ -722,8 +725,59 @@
         function initApp() {
             loadAllElements();
             setupAllEventListeners();
-            loadInitialData();
-            showNotification('Leaderboard System Ready!', 'success');
+            
+            // Load data from GitHub FIRST (for all visitors)
+            loadDataFromGitHub().then(() => {
+                // If no GitHub data, load local data
+                if (Object.keys(appState.days).length === 0) {
+                    loadInitialData();
+                }
+                updateDisplay();
+                startPublicSync(); // Start auto-sync for all visitors
+            });
+            
+            showNotification('🏁 Racing Leaderboard Ready!', 'success');
+        }
+
+        // ==================== GITHUB DATA SYNC ====================
+
+        async function loadDataFromGitHub() {
+            try {
+                console.log('🔄 Loading public data from GitHub...');
+                
+                // Prevent caching with timestamp
+                const response = await fetch(GITHUB_DATA_URL + '?t=' + Date.now());
+                
+                if (!response.ok) {
+                    throw new Error('GitHub data not available yet');
+                }
+                
+                const publicData = await response.json();
+                
+                // REPLACE local data with GitHub data (for public viewing)
+                appState.days = publicData.days || {};
+                appState.currentDay = publicData.currentDay;
+                
+                if (appState.currentDay && appState.days[appState.currentDay]) {
+                    appState.currentData = [...appState.days[appState.currentDay].data];
+                }
+                
+                console.log('✅ GitHub data loaded successfully!', appState.days);
+                showNotification('📡 Live data loaded from server!', 'success');
+                
+            } catch (error) {
+                console.log('ℹ️ Using local data - GitHub file not available yet');
+                // Don't show error to users - just use local data
+            }
+        }
+
+        function startPublicSync() {
+            // Auto-sync every 2 minutes for all visitors
+            setInterval(() => {
+                if (!appState.isAdmin) { // Don't sync while admin is working
+                    loadDataFromGitHub();
+                }
+            }, 120000); // 2 minutes
         }
 
         function loadAllElements() {
@@ -802,8 +856,6 @@
             } else {
                 createSampleData();
             }
-            
-            updateDisplay();
         }
 
         function createSampleData() {
@@ -1127,7 +1179,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showNotification('Data exported! Upload this JSON file to GitHub.', 'success');
+            showNotification('Data exported! Upload this JSON file to GitHub as data.json', 'success');
         }
 
         // ==================== NOTIFICATION SYSTEM ====================
