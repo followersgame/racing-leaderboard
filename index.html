@@ -41,11 +41,9 @@
             padding: 20px;
         }
 
-        /* Header Styles */
         header {
             text-align: center;
             padding: 30px 0;
-            position: relative;
             margin-bottom: 30px;
         }
 
@@ -57,26 +55,22 @@
             background-clip: text;
             color: transparent;
             text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            letter-spacing: 2px;
             margin-bottom: 10px;
         }
 
         .subtitle {
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 30px;
         }
 
-        /* Admin Panel */
         .admin-panel {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .admin-panel.active {
@@ -94,9 +88,6 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .close-admin {
@@ -107,14 +98,6 @@
             height: 40px;
             color: var(--light);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .close-admin:hover {
-            background: rgba(255, 255, 255, 0.2);
         }
 
         .admin-controls {
@@ -135,7 +118,7 @@
             font-weight: 600;
         }
 
-        .upload-btn, .winner-photo-btn {
+        .upload-btn {
             padding: 12px 25px;
             background: linear-gradient(to right, var(--success), #20c997);
             border: none;
@@ -143,7 +126,6 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -152,12 +134,20 @@
             margin-bottom: 10px;
         }
 
-        .upload-btn:hover, .winner-photo-btn:hover {
-            transform: translateY(-2px);
-        }
-
         .winner-photo-btn {
+            padding: 12px 25px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 10px;
         }
 
         .file-name {
@@ -189,7 +179,6 @@
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .save-btn {
@@ -202,14 +191,12 @@
             color: var(--light);
         }
 
-        /* Controls Section */
         .controls {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -238,7 +225,6 @@
             border-radius: 8px;
             color: var(--light);
             cursor: pointer;
-            transition: all 0.3s ease;
             font-weight: 500;
         }
 
@@ -271,7 +257,6 @@
             width: 100%;
         }
 
-        /* Winner Spotlight */
         .winner-spotlight {
             background: linear-gradient(135deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
             border-radius: 20px;
@@ -342,13 +327,11 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Leaderboard Table */
         .leaderboard-container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 40px;
         }
@@ -366,9 +349,6 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .day-info {
@@ -451,7 +431,6 @@
             font-weight: 600;
         }
 
-        /* Login Modal */
         .login-modal {
             position: fixed;
             top: 0;
@@ -478,7 +457,6 @@
             padding: 30px;
             width: 90%;
             max-width: 400px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -527,11 +505,34 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Responsive */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: linear-gradient(to right, var(--success), #20c997);
+        }
+
+        .notification.error {
+            background: linear-gradient(to right, var(--danger), #e83e8c);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         @media (max-width: 768px) {
             .title { font-size: 2.5rem; }
-            .control-row { flex-direction: column; }
-            .admin-controls { flex-direction: column; }
+            .control-row, .admin-controls { flex-direction: column; }
             .winner-content { flex-direction: column; text-align: center; }
             .winner-info { text-align: center; }
         }
@@ -543,13 +544,6 @@
             <h1 class="title">D_Follower's Game</h1>
             <p class="subtitle">Track your racing performance and climb the leaderboard!</p>
         </header>
-
-        <!-- Test Button -->
-        <div style="text-align: center; margin: 20px 0;">
-            <button onclick="alert('JavaScript is working!')" style="padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: 8px;">
-                Test JavaScript
-            </button>
-        </div>
 
         <!-- Admin Panel -->
         <section class="admin-panel" id="adminPanel">
@@ -571,21 +565,40 @@
                     </button>
                     <div class="file-name" id="fileName">No file selected</div>
                     <input type="file" id="csvFile" accept=".csv" style="display: none;">
+                    
+                    <div class="section-title" style="margin-top: 20px;">
+                        <i class="fas fa-camera"></i> Winner Photo Upload
+                    </div>
+                    <button class="winner-photo-btn" id="winnerPhotoBtn">
+                        <i class="fas fa-image"></i> Select Winner Photo
+                    </button>
+                    <div class="file-name" id="winnerPhotoName">No photo selected</div>
+                    <input type="file" id="winnerPhotoFile" accept="image/*" style="display: none;">
                 </div>
                 
                 <div class="admin-section">
                     <div class="section-title">
                         <i class="fas fa-calendar-plus"></i> Day Management
                     </div>
-                    <input type="text" class="day-input" id="dayName" placeholder="Enter day name">
+                    <input type="text" class="day-input" id="dayName" placeholder="Enter day name (e.g., Day 1, Finals)">
                     <div class="admin-actions">
                         <button class="action-btn save-btn" id="saveDay">
-                            <i class="fas fa-save"></i> Save Day
+                            <i class="fas fa-save"></i> Save Day with CSV
                         </button>
                         <button class="action-btn reset-btn" id="resetForm">
                             <i class="fas fa-redo"></i> Reset
                         </button>
                     </div>
+
+                    <div class="section-title" style="margin-top: 20px;">
+                        <i class="fas fa-cloud-upload-alt"></i> Update Public Data
+                    </div>
+                    <button class="upload-btn" id="exportGitHubBtn">
+                        <i class="fas fa-download"></i> Export Data for GitHub
+                    </button>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.8rem; margin-top: 10px;">
+                        After exporting, upload data.json to GitHub to update everyone.
+                    </p>
                 </div>
             </div>
         </section>
@@ -597,7 +610,7 @@
                         <i class="fas fa-calendar-alt"></i> Select Day
                     </div>
                     <div class="day-buttons" id="dayButtons">
-                        <button class="day-btn active">Day 1</button>
+                        <!-- Days will appear here -->
                     </div>
                 </div>
                 
@@ -621,25 +634,25 @@
 
         <section class="winner-spotlight">
             <h2 class="winner-title">
-                <i class="fas fa-trophy"></i> Today's Winner
+                <i class="fas fa-trophy"></i> <span id="winnerDayTitle">Today's</span> Winner
             </h2>
             <div class="winner-content">
                 <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
-                     alt="Winner Avatar" class="winner-avatar">
+                     alt="Winner Avatar" class="winner-avatar" id="winnerAvatar">
                 <div class="winner-info">
-                    <h3 class="winner-name">Racing_Pro_23</h3>
-                    <p>Finished in 12.45 seconds with perfect racing lines!</p>
+                    <h3 class="winner-name" id="winnerName">Racing_Pro_23</h3>
+                    <p id="winnerDescription">Finished in 12.45 seconds with perfect racing lines!</p>
                     <div class="winner-stats">
                         <div class="stat">
-                            <div class="stat-value">12.45s</div>
+                            <div class="stat-value" id="winnerTime">12.45s</div>
                             <div class="stat-label">Finish Time</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-value">Lane 4</div>
+                            <div class="stat-value" id="winnerLane">Lane 4</div>
                             <div class="stat-label">Position</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-value">🥇</div>
+                            <div class="stat-value" id="winnerMedal">🥇</div>
                             <div class="stat-label">Gold Medal</div>
                         </div>
                     </div>
@@ -652,7 +665,7 @@
                 <h2 class="leaderboard-title">
                     <i class="fas fa-list-ol"></i> Race Leaderboard
                 </h2>
-                <div class="day-info">Day 1</div>
+                <div class="day-info" id="currentDayInfo">Day 1</div>
             </div>
             <div class="table-container">
                 <table>
@@ -668,40 +681,14 @@
                         </tr>
                     </thead>
                     <tbody id="leaderboardBody">
-                        <tr>
-                            <td class="rank-cell rank-1">1</td>
-                            <td>Racing_Pro_23</td>
-                            <td>Alex Johnson</td>
-                            <td class="time-cell">12.45s</td>
-                            <td>747</td>
-                            <td>4</td>
-                            <td class="medal-cell"><span class="medal medal-gold">Gold</span></td>
-                        </tr>
-                        <tr>
-                            <td class="rank-cell rank-2">2</td>
-                            <td>Speed_Demon</td>
-                            <td>Maria Garcia</td>
-                            <td class="time-cell">12.67s</td>
-                            <td>760</td>
-                            <td>2</td>
-                            <td class="medal-cell"><span class="medal medal-silver">Silver</span></td>
-                        </tr>
-                        <tr>
-                            <td class="rank-cell rank-3">3</td>
-                            <td>Track_Master</td>
-                            <td>David Smith</td>
-                            <td class="time-cell">12.89s</td>
-                            <td>773</td>
-                            <td>7</td>
-                            <td class="medal-cell"><span class="medal medal-bronze">Bronze</span></td>
-                        </tr>
+                        <!-- Data will appear here -->
                     </tbody>
                 </table>
             </div>
         </section>
 
         <footer>
-            <p>D_Follower's Game Leaderboard &copy; 2023 | Designed for racing enthusiasts</p>
+            <p>D_Follower's Game Leaderboard &copy; 2023 | Professional Racing Leaderboard System</p>
         </footer>
     </div>
 
@@ -718,87 +705,448 @@
     </div>
 
     <script>
-        // Simple working JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Website loaded successfully!');
-            
-            // Get elements
-            const adminAccessBtn = document.getElementById('adminAccessBtn');
-            const loginModal = document.getElementById('loginModal');
-            const loginBtn = document.getElementById('loginBtn');
-            const adminPassword = document.getElementById('adminPassword');
-            const loginError = document.getElementById('loginError');
-            const adminPanel = document.getElementById('adminPanel');
-            const closeAdmin = document.getElementById('closeAdmin');
-            const uploadBtn = document.getElementById('uploadBtn');
-            const csvFile = document.getElementById('csvFile');
-            const fileName = document.getElementById('fileName');
-            const saveDayBtn = document.getElementById('saveDay');
+        // ==================== APPLICATION STATE ====================
+        const appState = {
+            days: {},
+            currentDay: null,
+            currentData: [],
+            isAdmin: false,
+            adminPassword: 'admin123'
+        };
 
-            // Admin Access Button
-            if (adminAccessBtn) {
-                adminAccessBtn.addEventListener('click', function() {
-                    console.log('Admin button clicked');
-                    loginModal.classList.add('active');
-                });
-            }
+        // ==================== DOM ELEMENTS ====================
+        const elements = {};
 
-            // Login Button
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function() {
-                    if (adminPassword.value === 'admin123') {
-                        loginModal.classList.remove('active');
-                        adminPanel.classList.add('active');
-                        loginError.style.display = 'none';
-                        alert('Admin access granted!');
-                    } else {
-                        loginError.style.display = 'block';
-                    }
-                });
-            }
+        // ==================== CORE FUNCTIONS ====================
 
-            // Close Admin Panel
-            if (closeAdmin) {
-                closeAdmin.addEventListener('click', function() {
-                    adminPanel.classList.remove('active');
-                });
-            }
+        function initApp() {
+            loadAllElements();
+            setupAllEventListeners();
+            loadInitialData();
+            showNotification('Leaderboard System Ready!', 'success');
+        }
 
-            // File Upload
-            if (uploadBtn && csvFile) {
-                uploadBtn.addEventListener('click', function() {
-                    csvFile.click();
-                });
+        function loadAllElements() {
+            const elementIds = [
+                'leaderboardBody', 'searchInput', 'dayButtons', 'adminAccessBtn',
+                'adminPanel', 'closeAdmin', 'uploadBtn', 'csvFile', 'fileName', 
+                'dayNameInput', 'saveDayBtn', 'resetFormBtn', 'loginModal', 
+                'adminPasswordInput', 'loginBtn', 'loginError', 'currentDayInfo',
+                'winnerDayTitle', 'winnerAvatar', 'winnerName', 'winnerDescription',
+                'winnerTime', 'winnerLane', 'winnerMedal', 'winnerPhotoBtn',
+                'winnerPhotoFile', 'winnerPhotoName', 'exportGitHubBtn'
+            ];
 
-                csvFile.addEventListener('change', function(event) {
-                    if (event.target.files.length > 0) {
-                        fileName.textContent = event.target.files[0].name;
-                        alert('CSV file selected: ' + event.target.files[0].name);
-                    }
-                });
-            }
-
-            // Save Day Button
-            if (saveDayBtn) {
-                saveDayBtn.addEventListener('click', function() {
-                    const dayName = document.getElementById('dayName').value || 'New Day';
-                    if (csvFile.files.length > 0) {
-                        alert('Day "' + dayName + '" saved with CSV file!');
-                    } else {
-                        alert('Please select a CSV file first!');
-                    }
-                });
-            }
-
-            // Close modal when clicking outside
-            loginModal.addEventListener('click', function(event) {
-                if (event.target === loginModal) {
-                    loginModal.classList.remove('active');
-                }
+            elementIds.forEach(id => {
+                elements[id] = document.getElementById(id);
             });
 
-            console.log('All JavaScript loaded correctly!');
-        });
+            // Fix ID mismatches
+            elements.dayNameInput = document.getElementById('dayName');
+            elements.saveDayBtn = document.getElementById('saveDay');
+            elements.resetFormBtn = document.getElementById('resetForm');
+            elements.adminPasswordInput = document.getElementById('adminPassword');
+        }
+
+        function setupAllEventListeners() {
+            // Admin Access
+            elements.adminAccessBtn?.addEventListener('click', showLoginModal);
+            elements.loginBtn?.addEventListener('click', handleAdminLogin);
+            elements.closeAdmin?.addEventListener('click', hideAdminPanel);
+
+            // File Uploads
+            elements.uploadBtn?.addEventListener('click', () => elements.csvFile?.click());
+            elements.csvFile?.addEventListener('change', handleFileSelect);
+            elements.winnerPhotoBtn?.addEventListener('click', () => elements.winnerPhotoFile?.click());
+            elements.winnerPhotoFile?.addEventListener('change', handleWinnerPhotoSelect);
+
+            // Day Management
+            elements.saveDayBtn?.addEventListener('click', handleSaveDay);
+            elements.resetFormBtn?.addEventListener('click', resetForm);
+
+            // Search
+            elements.searchInput?.addEventListener('input', handleSearch);
+
+            // Export
+            elements.exportGitHubBtn?.addEventListener('click', exportDataForGitHub);
+
+            // Modal close
+            elements.loginModal?.addEventListener('click', (e) => {
+                if (e.target === elements.loginModal) hideLoginModal();
+            });
+
+            // Enter key in login
+            elements.adminPasswordInput?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleAdminLogin();
+            });
+        }
+
+        function loadInitialData() {
+            const savedData = localStorage.getItem('racingLeaderboardData');
+            if (savedData) {
+                try {
+                    const parsed = JSON.parse(savedData);
+                    appState.days = parsed.days || {};
+                    appState.currentDay = parsed.currentDay;
+                    
+                    if (Object.keys(appState.days).length === 0) {
+                        createSampleData();
+                    } else {
+                        const firstDay = Object.keys(appState.days)[0];
+                        if (!appState.currentDay) appState.currentDay = firstDay;
+                        appState.currentData = [...appState.days[appState.currentDay].data];
+                    }
+                } catch (e) {
+                    createSampleData();
+                }
+            } else {
+                createSampleData();
+            }
+            
+            updateDisplay();
+        }
+
+        function createSampleData() {
+            const sampleData = [
+                { rank: 1, username: "Racing_Pro", full_name: "Alex Johnson", finish_time_seconds: 12.45, finish_time_frames: 747, lane_position: 4, medal: "Gold" },
+                { rank: 2, username: "Speed_Demon", full_name: "Maria Garcia", finish_time_seconds: 12.67, finish_time_frames: 760, lane_position: 2, medal: "Silver" },
+                { rank: 3, username: "Track_Master", full_name: "David Smith", finish_time_seconds: 12.89, finish_time_frames: 773, lane_position: 7, medal: "Bronze" }
+            ];
+
+            const dayKey = 'day_' + Date.now();
+            appState.days[dayKey] = {
+                name: "Sample Race Day",
+                data: sampleData,
+                winnerPhoto: null
+            };
+            appState.currentDay = dayKey;
+            appState.currentData = sampleData;
+            
+            saveToLocalStorage();
+        }
+
+        // ==================== CSV HANDLING ====================
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                elements.fileName.textContent = file.name;
+            }
+        }
+
+        function handleSaveDay() {
+            if (!elements.csvFile.files[0]) {
+                showNotification('Please select a CSV file first!', 'error');
+                return;
+            }
+
+            const dayName = elements.dayNameInput.value.trim() || `Day ${Object.keys(appState.days).length + 1}`;
+            const file = elements.csvFile.files[0];
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csvData = parseCSV(e.target.result);
+                    if (csvData.length > 0) {
+                        const dayKey = 'day_' + Date.now();
+                        appState.days[dayKey] = {
+                            name: dayName,
+                            data: csvData,
+                            winnerPhoto: null
+                        };
+                        
+                        appState.currentDay = dayKey;
+                        appState.currentData = csvData;
+                        
+                        saveToLocalStorage();
+                        updateDisplay();
+                        resetForm();
+                        
+                        showNotification(`"${dayName}" created successfully with ${csvData.length} racers!`, 'success');
+                    } else {
+                        showNotification('No valid data found in CSV file', 'error');
+                    }
+                } catch (error) {
+                    showNotification('Error parsing CSV file: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim());
+            if (lines.length < 2) return [];
+
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            const requiredHeaders = ['rank', 'username', 'full_name', 'finish_time_seconds', 'finish_time_frames', 'lane_position', 'medal'];
+            
+            for (let header of requiredHeaders) {
+                if (!headers.includes(header)) {
+                    throw new Error(`Missing required column: ${header}`);
+                }
+            }
+
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim());
+                if (values.length === headers.length) {
+                    const entry = {};
+                    headers.forEach((header, index) => {
+                        let value = values[index];
+                        if (['rank', 'finish_time_seconds', 'finish_time_frames', 'lane_position'].includes(header)) {
+                            value = Number(value) || 0;
+                        }
+                        entry[header] = value;
+                    });
+                    data.push(entry);
+                }
+            }
+
+            return data.sort((a, b) => a.rank - b.rank);
+        }
+
+        // ==================== WINNER PHOTO HANDLING ====================
+
+        function handleWinnerPhotoSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                if (!file.type.startsWith('image/')) {
+                    showNotification('Please select an image file!', 'error');
+                    return;
+                }
+                
+                elements.winnerPhotoName.textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (appState.currentDay && appState.days[appState.currentDay]) {
+                        appState.days[appState.currentDay].winnerPhoto = e.target.result;
+                        elements.winnerAvatar.src = e.target.result;
+                        saveToLocalStorage();
+                        showNotification('Winner photo updated!', 'success');
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ==================== DISPLAY FUNCTIONS ====================
+
+        function updateDisplay() {
+            renderLeaderboard();
+            renderDayButtons();
+            updateWinnerSpotlight();
+            updateCurrentDayInfo();
+        }
+
+        function renderLeaderboard() {
+            if (!elements.leaderboardBody) return;
+            
+            elements.leaderboardBody.innerHTML = '';
+            
+            if (!appState.currentData || appState.currentData.length === 0) {
+                elements.leaderboardBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">No data available</td></tr>';
+                return;
+            }
+
+            appState.currentData.forEach(player => {
+                const row = document.createElement('tr');
+                let medalClass = '';
+                if (player.medal === 'Gold') medalClass = 'medal-gold';
+                else if (player.medal === 'Silver') medalClass = 'medal-silver';
+                else if (player.medal === 'Bronze') medalClass = 'medal-bronze';
+
+                row.innerHTML = `
+                    <td class="rank-cell rank-${player.rank}">${player.rank}</td>
+                    <td>${player.username}</td>
+                    <td>${player.full_name}</td>
+                    <td class="time-cell">${player.finish_time_seconds.toFixed(2)}s</td>
+                    <td>${player.finish_time_frames}</td>
+                    <td>${player.lane_position}</td>
+                    <td class="medal-cell">
+                        ${player.medal !== 'None' ? `<span class="medal ${medalClass}">${player.medal}</span>` : '-'}
+                    </td>
+                `;
+                elements.leaderboardBody.appendChild(row);
+            });
+        }
+
+        function renderDayButtons() {
+            if (!elements.dayButtons) return;
+            
+            elements.dayButtons.innerHTML = '';
+            Object.keys(appState.days).forEach(dayKey => {
+                const day = appState.days[dayKey];
+                const button = document.createElement('button');
+                button.className = `day-btn ${appState.currentDay === dayKey ? 'active' : ''}`;
+                button.textContent = day.name;
+                button.onclick = () => changeDay(dayKey);
+                elements.dayButtons.appendChild(button);
+            });
+        }
+
+        function updateWinnerSpotlight() {
+            if (!appState.currentDay || !appState.days[appState.currentDay]) return;
+            
+            const day = appState.days[appState.currentDay];
+            const winner = day.data[0];
+            if (!winner) return;
+
+            if (elements.winnerDayTitle) elements.winnerDayTitle.textContent = day.name + "'s";
+            if (elements.winnerName) elements.winnerName.textContent = winner.username;
+            if (elements.winnerDescription) elements.winnerDescription.textContent = `Finished in ${winner.finish_time_seconds.toFixed(2)} seconds!`;
+            if (elements.winnerTime) elements.winnerTime.textContent = `${winner.finish_time_seconds.toFixed(2)}s`;
+            if (elements.winnerLane) elements.winnerLane.textContent = `Lane ${winner.lane_position}`;
+            if (elements.winnerMedal) elements.winnerMedal.textContent = winner.medal === 'Gold' ? '🥇' : winner.medal === 'Silver' ? '🥈' : '🥉';
+            
+            if (elements.winnerAvatar && day.winnerPhoto) {
+                elements.winnerAvatar.src = day.winnerPhoto;
+            }
+        }
+
+        function updateCurrentDayInfo() {
+            if (elements.currentDayInfo && appState.currentDay && appState.days[appState.currentDay]) {
+                elements.currentDayInfo.textContent = appState.days[appState.currentDay].name;
+            }
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+
+        function changeDay(dayKey) {
+            if (appState.days[dayKey]) {
+                appState.currentDay = dayKey;
+                appState.currentData = [...appState.days[dayKey].data];
+                updateDisplay();
+            }
+        }
+
+        function handleSearch() {
+            const term = elements.searchInput.value.toLowerCase();
+            if (!term) {
+                renderLeaderboard();
+                return;
+            }
+            
+            const filtered = appState.currentData.filter(player => 
+                player.username.toLowerCase().includes(term) || 
+                player.full_name.toLowerCase().includes(term)
+            );
+            
+            // Temporary render filtered results
+            const tempBody = elements.leaderboardBody;
+            tempBody.innerHTML = '';
+            filtered.forEach(player => {
+                const row = document.createElement('tr');
+                let medalClass = '';
+                if (player.medal === 'Gold') medalClass = 'medal-gold';
+                else if (player.medal === 'Silver') medalClass = 'medal-silver';
+                else if (player.medal === 'Bronze') medalClass = 'medal-bronze';
+
+                row.innerHTML = `
+                    <td class="rank-cell rank-${player.rank}">${player.rank}</td>
+                    <td>${player.username}</td>
+                    <td>${player.full_name}</td>
+                    <td class="time-cell">${player.finish_time_seconds.toFixed(2)}s</td>
+                    <td>${player.finish_time_frames}</td>
+                    <td>${player.lane_position}</td>
+                    <td class="medal-cell">
+                        ${player.medal !== 'None' ? `<span class="medal ${medalClass}">${player.medal}</span>` : '-'}
+                    </td>
+                `;
+                tempBody.appendChild(row);
+            });
+        }
+
+        function resetForm() {
+            elements.dayNameInput.value = '';
+            elements.fileName.textContent = 'No file selected';
+            elements.winnerPhotoName.textContent = 'No photo selected';
+            elements.csvFile.value = '';
+            elements.winnerPhotoFile.value = '';
+        }
+
+        function saveToLocalStorage() {
+            const dataToSave = {
+                days: appState.days,
+                currentDay: appState.currentDay
+            };
+            localStorage.setItem('racingLeaderboardData', JSON.stringify(dataToSave));
+        }
+
+        // ==================== ADMIN FUNCTIONS ====================
+
+        function showLoginModal() {
+            if (elements.loginModal) {
+                elements.loginModal.classList.add('active');
+                elements.adminPasswordInput.value = '';
+                elements.loginError.style.display = 'none';
+            }
+        }
+
+        function hideLoginModal() {
+            if (elements.loginModal) elements.loginModal.classList.remove('active');
+        }
+
+        function handleAdminLogin() {
+            const password = elements.adminPasswordInput?.value || '';
+            if (password === appState.adminPassword) {
+                appState.isAdmin = true;
+                hideLoginModal();
+                showAdminPanel();
+                showNotification('Admin access granted!', 'success');
+            } else {
+                elements.loginError.style.display = 'block';
+                elements.adminPasswordInput.value = '';
+            }
+        }
+
+        function showAdminPanel() {
+            if (elements.adminPanel) elements.adminPanel.classList.add('active');
+        }
+
+        function hideAdminPanel() {
+            if (elements.adminPanel) elements.adminPanel.classList.remove('active');
+        }
+
+        // ==================== GITHUB EXPORT ====================
+
+        function exportDataForGitHub() {
+            const dataToExport = {
+                days: appState.days,
+                currentDay: appState.currentDay
+            };
+            
+            const dataStr = JSON.stringify(dataToExport, null, 2);
+            const blob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'racing_leaderboard_data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Data exported! Upload this JSON file to GitHub.', 'success');
+        }
+
+        // ==================== NOTIFICATION SYSTEM ====================
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // ==================== INITIALIZE APPLICATION ====================
+
+        document.addEventListener('DOMContentLoaded', initApp);
+
     </script>
 </body>
 </html>
